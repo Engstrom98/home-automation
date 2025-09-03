@@ -119,12 +119,12 @@ class PlantMonitor {
         
         if (this.isListView) {
             this.plantsGrid.classList.add('list-view');
-            this.currentViewLabel.textContent = 'List View';
+            this.currentViewLabel.textContent = 'Change View';
             this.viewToggleBtn.innerHTML = '<i class="fas fa-th-large"></i> Card View';
             this.viewToggleBtn.title = 'Switch to card view';
         } else {
             this.plantsGrid.classList.remove('list-view');
-            this.currentViewLabel.textContent = 'Card View';
+            this.currentViewLabel.textContent = 'Change View';
             this.viewToggleBtn.innerHTML = '<i class="fas fa-list"></i> List View';
             this.viewToggleBtn.title = 'Switch to list view';
         }
