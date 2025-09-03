@@ -5,6 +5,7 @@ class PlantMonitor {
         this.lastUpdateTime = null;
         this.isOnline = false;
         this.isListView = false;
+        this.statusFilter = null;
         
         this.initializeElements();
         this.bindEvents();
@@ -23,6 +24,11 @@ class PlantMonitor {
         this.healthyPlantsEl = document.getElementById('healthyPlants');
         this.warningPlantsEl = document.getElementById('warningPlants');
         this.criticalPlantsEl = document.getElementById('criticalPlants');
+        
+        this.healthyCard = this.healthyPlantsEl.closest('.stat-card');
+        this.warningCard = this.warningPlantsEl.closest('.stat-card');
+        this.criticalCard = this.criticalPlantsEl.closest('.stat-card');
+        this.totalCard = this.totalPlantsEl.closest('.stat-card');
     }
 
     bindEvents() {
@@ -32,6 +38,11 @@ class PlantMonitor {
             this.renderPlants();
         });
         this.viewToggleBtn.addEventListener('click', () => this.toggleView());
+        
+        this.healthyCard.addEventListener('click', () => this.filterByStatus('healthy'));
+        this.warningCard.addEventListener('click', () => this.filterByStatus('warning'));
+        this.criticalCard.addEventListener('click', () => this.filterByStatus('critical'));
+        this.totalCard.addEventListener('click', () => this.clearFilter());
     }
 
     async loadMockData() {
@@ -116,12 +127,54 @@ class PlantMonitor {
         this.renderPlants();
     }
 
-    renderPlants() {
-        const sortedPlants = this.sortPlants(this.plants);
+    filterByStatus(status) {
+        this.statusFilter = this.statusFilter === status ? null : status;
+        this.updateFilterUI();
+        this.renderPlants();
+    }
+    
+    clearFilter() {
+        this.statusFilter = null;
+        this.updateFilterUI();
+        this.renderPlants();
+    }
+    
+    updateFilterUI() {
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.classList.remove('active-filter');
+        });
         
-        this.plantsGrid.innerHTML = sortedPlants.map(plant => 
-            this.createPlantCard(plant)
-        ).join('');
+        if (this.statusFilter) {
+            if (this.statusFilter === 'healthy') this.healthyCard.classList.add('active-filter');
+            if (this.statusFilter === 'warning') this.warningCard.classList.add('active-filter');
+            if (this.statusFilter === 'critical') this.criticalCard.classList.add('active-filter');
+        }
+    }
+
+    renderPlants() {
+        let plantsToRender = this.plants;
+        
+        if (this.statusFilter) {
+            plantsToRender = this.plants.filter(plant => 
+                this.getPlantStatus(plant.humidity) === this.statusFilter
+            );
+        }
+        
+        const sortedPlants = this.sortPlants(plantsToRender);
+        
+        if (sortedPlants.length === 0 && this.statusFilter) {
+            this.plantsGrid.innerHTML = `
+                <div class="no-plants-message">
+                    <i class="fas fa-search"></i>
+                    <h3>No ${this.statusFilter} plants found</h3>
+                    <p>Click "Total Plants" to show all plants</p>
+                </div>
+            `;
+        } else {
+            this.plantsGrid.innerHTML = sortedPlants.map(plant => 
+                this.createPlantCard(plant)
+            ).join('');
+        }
     }
 
     sortPlants(plants) {
