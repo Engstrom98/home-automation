@@ -423,44 +423,218 @@ body {
     margin-top: auto;
 }
 
-@media (max-width: 768px) {
+/* Mobile Phone Layout (320px - 480px) */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .header {
+        padding: 0.75rem 0;
+    }
+    
+    .header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .status-indicator {
+        font-size: 0.8rem;
+        flex-direction: column;
+        gap: 0.25rem;
+        text-align: center;
+    }
+    
+    .main {
+        padding: 1rem 0;
+    }
+    
+    /* Mobile-optimized summary stats */
+    .summary-stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .stat-card {
+        padding: 0.75rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    .stat-label {
+        font-size: 0.8rem;
+    }
+    
+    /* Mobile dashboard controls */
+    .dashboard-controls {
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .left-controls {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .btn {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+    
+    .select {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Mobile plant cards - force list view on mobile */
+    .plants-grid {
+        display: block;
+        gap: 0;
+    }
+    
+    .plant-card {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+        border-radius: 8px;
+    }
+    
+    .plant-header {
+        margin-bottom: 0.75rem;
+    }
+    
+    .plant-name {
+        font-size: 1.1rem;
+    }
+    
+    .humidity-display {
+        margin: 0.75rem 0;
+    }
+    
+    .humidity-value {
+        font-size: 2rem;
+    }
+    
+    .humidity-bar {
+        margin: 0.75rem 0;
+    }
+    
+    .plant-meta {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+    }
+    
+    .meta-item {
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    /* Hide list view toggle on mobile since we force optimal layout */
+    .view-toggle {
+        display: none;
+    }
+    
+    /* Mobile footer */
+    .footer {
+        padding: 0.75rem 0;
+        font-size: 0.9rem;
+    }
+}
+
+/* Tablet Layout (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+    
     .header .container {
         flex-direction: column;
         gap: 1rem;
         text-align: center;
     }
     
-    .dashboard-controls {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .plants-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
+    .header h1 {
+        font-size: 1.6rem;
     }
     
     .summary-stats {
         grid-template-columns: repeat(2, 1fr);
-        gap: 0.75rem;
+        gap: 1rem;
+        margin-bottom: 2rem;
     }
     
     .stat-card {
+        padding: 1.25rem;
+    }
+    
+    .dashboard-controls {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    .left-controls {
+        justify-content: center;
+    }
+    
+    .filter-controls {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .plants-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+    }
+    
+    .plants-grid.list-view .plant-card {
         padding: 1rem;
     }
     
+    .plants-grid.list-view .plant-meta {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+    
     .humidity-value {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
 }
 
-@media (max-width: 480px) {
-    .summary-stats {
-        grid-template-columns: 1fr;
+/* Desktop Large (769px+) - Enhanced for better use of space */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .plants-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
     
-    .plant-meta {
-        grid-template-columns: 1fr;
-        gap: 0.25rem;
+    .summary-stats {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1025px) {
+    .plants-grid {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+    
+    .container {
+        max-width: 1400px;
     }
 }
