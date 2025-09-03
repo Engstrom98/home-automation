@@ -18,6 +18,7 @@ class PlantMonitor {
         this.refreshBtn = document.getElementById('refreshBtn');
         this.sortFilter = document.getElementById('sortFilter');
         this.viewToggleBtn = document.getElementById('viewToggleBtn');
+        this.currentViewLabel = document.getElementById('currentViewLabel');
         this.connectionStatus = document.getElementById('connectionStatus');
         this.lastUpdateEl = document.getElementById('lastUpdate');
         this.totalPlantsEl = document.getElementById('totalPlants');
@@ -118,10 +119,14 @@ class PlantMonitor {
         
         if (this.isListView) {
             this.plantsGrid.classList.add('list-view');
-            this.viewToggleBtn.innerHTML = '<i class="fas fa-list"></i> List View';
+            this.currentViewLabel.textContent = 'List View';
+            this.viewToggleBtn.innerHTML = '<i class="fas fa-th-large"></i> Card View';
+            this.viewToggleBtn.title = 'Switch to card view';
         } else {
             this.plantsGrid.classList.remove('list-view');
-            this.viewToggleBtn.innerHTML = '<i class="fas fa-th-large"></i> Card View';
+            this.currentViewLabel.textContent = 'Card View';
+            this.viewToggleBtn.innerHTML = '<i class="fas fa-list"></i> List View';
+            this.viewToggleBtn.title = 'Switch to list view';
         }
         
         this.renderPlants();
